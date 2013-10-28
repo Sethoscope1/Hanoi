@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Towers of Hanoi</title>
+    <style>
+    body {
+      text-align: center;
+    }
+
+    h1 {
+      font: 80px futura;
+      color: SlateBlue;
+    }
+
+    #board {
+      width: 900px;
+      margin: auto;
+    }
+
+    .tower {
+      width: 280px;
+      float: left;
+      margin: 10px;
+    }
+
+    .piece{
+      height: 75px;
+      margin: 10px auto;
+      width: 100%;
+    }
+
+    .empty {
+      background: OldLace;
+    }
+
+    .top {
+      background: DarkRed;
+      width: 40%;
+    }
+
+    .middle {
+      background: IndianRed;
+      width: 70%;
+    }
+
+    .bottom {
+      background: SandyBrown;
+      width: 100%;
+    }
+    </style>
+  </head>
+
+  <body>
+    <h1>Towers of Hanoi</h1>
+
+    <div id="board">
+      <div class="tower" id="0">
+        <div class="piece empty" id="piece2"></div>
+        <div class="piece empty" id="piece1"></div>
+        <div class="piece empty" id="piece0"></div>
+      </div>
+
+      <div class="tower" id="1">
+        <div class="piece empty" id="piece5"></div>
+        <div class="piece empty" id="piece4"></div>
+        <div class="piece empty" id="piece3"></div>
+      </div>
+
+      <div class="tower" id="2">
+        <div class="piece empty" id="piece8"></div>
+        <div class="piece empty" id="piece7"></div>
+        <div class="piece empty" id="piece6"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="underscore-min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="hanoi.js"></script>
+
+    <script>
+    $(document).ready(function(){
+      var hanoi = new Hanoi.Game();
+
+      var move = [];
+
+      var render = function(towers){
+        for(var i = 0; i < 3; i ++){
+          for(var j = 0; j < 3; j++){
+
+            var num = i + j;
+            if(i === 1){
+              num += 2;
+            }
+            if(i === 2){
+              num += 4;
+            }
+            var el = $("#piece" + num);
+            el.removeClass();
+
+            var piece = towers[i][j];
+
+            if(piece === 1){
+              el.addClass('piece top');
+            } else if(piece === 2){
+              el.addClass('piece middle');
+            } else if(piece === 3){
+              el.addClass('piece bottom');
+            } else {
+              el.addClass('piece empty');
+            }
+          }
+        }
+
+      };
+
+      render(hanoi.towers);
+      console.log(hanoi.towers);
+
+      $('.tower').on('click', function() {
+        move.push($(this).attr('id'));
+        console.log(move);
+        if(move.length == 2) {
+          hanoi.takeTurn(move[0], move[1]);
+          console.log(hanoi.towers);
+          render(hanoi.towers);
+          move = [];
+        }
+      });
+
+    });
+    </script>
+  </body>
+</html>
