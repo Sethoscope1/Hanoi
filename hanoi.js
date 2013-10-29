@@ -1,12 +1,6 @@
 (function (root) {
   var Hanoi = root.Hanoi = (root.Hanoi || {});
 
-  // var readline = require('readline');
-  // var READER = readline.createInterface({
-  //   input: process.stdin,
-  //   output: process.stdout
-  // });
-
   var Game = Hanoi.Game = function () {
     this.towers = [[3, 2, 1], [], []];
   };
